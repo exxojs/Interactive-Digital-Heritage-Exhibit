@@ -472,7 +472,7 @@ body > * {
     transition: filter 0.3s ease;
 }
 
-/* Reference Link & Backdrop Focus */
+/* Base Reference Link Styles */
 .ref-list li {
     margin-bottom: 20px;
     position: relative;
@@ -498,12 +498,24 @@ body > * {
     color: var(--accent-gold);
 }
 
-/* Hover Focused State */
-.ref-link:hover {
-    color: #ffffff;
-    background-color: #1c1c1c;
-    border-color: var(--accent-gold);
-    transform: scale(1.15);
-    z-index: 9999;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+/* DESKTOP MOUSE ONLY: Trigger blur and scale on hover */
+@media (hover: hover) {
+    .ref-link:hover {
+        color: #ffffff;
+        background-color: #1c1c1c;
+        border-color: var(--accent-gold);
+        transform: scale(1.15);
+        z-index: 9999;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+}
+
+/* MOBILE TOUCH ONLY: Quick tap feedback without sticky zoom/blur */
+@media (hover: none) {
+    .ref-link:active {
+        color: #ffffff;
+        background-color: #1c1c1c;
+        border-color: var(--accent-gold);
+        transform: scale(0.98);
+    }
 }
