@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalinangang Pilipino | Paniniwala at Pananampalataya</title>
+    <!-- FontAwesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Top Bar with Hover Hamburger Trigger -->
+    <header class="top-bar">
+        <div class="menu-trigger" id="menu-trigger">
+            <i class="fa-solid fa-bars"></i>
+            <span>MENU</span>
+        </div>
+        <div class="brand-logo">
+            <i class="fa-solid fa-landmark-dome"></i> HIRAYA
+        </div>
+        <div class="header-right">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+    </header>
+
+    <!-- Side Navigation Drawer (Opens on Hover/Trigger) -->
+    <nav class="side-nav" id="side-nav">
+        <div class="nav-header">
+            <h3>MGA SEKSYON</h3>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#featured"><i class="fa-solid fa-star"></i> Tampok na Aral</a></li>
+            <li><a href="#gallery"><i class="fa-solid fa-images"></i> Galerya</a></li>
+            <li><a href="#about"><i class="fa-solid fa-circle-info"></i> Tungkol sa Exhibit</a></li>
+            <li><a href="#references"><i class="fa-solid fa-book-bookmark"></i> Sanggunian</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay backdrop for drawer -->
+    <div class="nav-overlay" id="nav-overlay"></div>
+
+    <!-- Parallax Hero Banner -->
+    <section id="home" class="hero-parallax">
+        <div class="hero-overlay">
+            <div class="hero-text">
+                <span class="badge"><i class="fa-solid fa-scroll"></i> EXHIBIT PAMPAMANAN</span>
+                <h1>PANINIWALA AT PANANAMPALATAYA</h1>
+                <p>Isang pagtuklas sa espiritwalidad, tradisyon, at pagkakakilanlan ng lipunang Pilipino.</p>
+                <a href="#featured" class="btn-primary"><i class="fa-solid fa-compass"></i> Simulan ang Paglalakbay</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editorial Featured Story Section (History.com Style Layout) -->
+    <section id="featured" class="featured-section">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fa-solid fa-fire-flame-curved"></i> PANGUNAHING TAMPOK</h2>
+            </div>
+            <div class="editorial-grid">
+                <div class="editorial-main" onclick="openModal('Pista ng Poong Nazareno', 'Ang Traslacion ay nagpapakita ng matinding debosyon ng milyun-milyong Pilipino. Simbolo ito ng pananampalataya, pag-asa, at sakripisyo sa gitna ng mga pagsubok sa buhay.')">
+                    <div class="img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?auto=format&fit=crop&w=800&q=80" alt="Traslacion">
+                    </div>
+                    <div class="editorial-content">
+                        <span class="category"><i class="fa-solid fa-cross"></i> DEBOSYON AT TRADISYON</span>
+                        <h3>Ang Traslacion at Ang Debosyon sa Poong Nazareno</h3>
+                        <p>Alamin kung paano naging ugat ng pambansang pagkakakilanlan ang taunang pagdarangal sa Quiapo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Parallax Divider -->
+    <section class="parallax-divider">
+        <div class="divider-content">
+            <i class="fa-solid fa-quote-left quote-icon"></i>
+            <h2>"Ang pananampalataya ay hindi lamang paniniwala, ito ay dimensiyon ng ating araw-araw na pamumuhay."</h2>
+        </div>
+    </section>
+
+<!-- Revolving & Draggable Grid Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fa-solid fa-border-all"></i> KOLEKSYON NG EXHIBIT</h2>
+            </div>
+            
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carousel-track">
+                    
+                    <div class="gallery-card" onclick="openModal('Simbang Gabi', 'Isang siyam na araw na serye ng mga misa bago sumapit ang Pasko, na nagpapakita ng pag-asa at pagkakaisa ng pamilyang Pilipino.')">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=500&q=80" alt="Simbang Gabi">
+                        </div>
+                        <div class="card-info">
+                            <h4><i class="fa-solid fa-church"></i> Simbang Gabi</h4>
+                            <p>Kulturang Pamasko at Espiritwalidad</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" onclick="openModal('Pahiyas Festival', 'Pagpapasalamat sa masaganang ani kay San Isidro Labrador gamit ang mga makukulay na kiping sa Quezon.')">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=500&q=80" alt="Pahiyas Festival">
+                        </div>
+                        <div class="card-info">
+                            <h4><i class="fa-solid fa-wheat-awn"></i> Pahiyas Festival</h4>
+                            <p>Pasasalamat sa Sagana at Ani</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" onclick="openModal('Paniniwalang Anitism', 'Mga sinaunang paniniwala sa anito, diwata, at kalikasan bago pumasok ang mga banyagang relihiyon.')">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=500&q=80" alt="Paniniwalang Anitism">
+                        </div>
+                        <div class="card-info">
+                            <h4><i class="fa-solid fa-tree"></i> Paniniwalang Anitism</h4>
+                            <p>Sinaunang Espiritwalidad</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" onclick="openModal('Santo Niño Debosyon', 'Isang malalim na tradisyon ng pagpaparangal sa Banal na Sanggol sa Tondo, Cebu, at iba pang dako ng bansa.')">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1548625149-fc4a29cf7092?auto=format&fit=crop&w=500&q=80" alt="Santo Niño">
+                        </div>
+                        <div class="card-info">
+                            <h4><i class="fa-solid fa-hands-praying"></i> Pista ng Santo Niño</h4>
+                            <p>Kulturang Katoliko at Pista</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" onclick="openModal('Senakulo', 'Dula sa kalsada na nagpapakita ng buhay, pagpapasakit, at pagkabuhay muli ni Hesu-Kristo tuwing Mahal na Araw.')">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=500&q=80" alt="Senakulo">
+                        </div>
+                        <div class="card-info">
+                            <h4><i class="fa-solid fa-masks-theater"></i> Ang Senakulo</h4>
+                            <p>Tradisyonal na Dulaang Panrelihiyon</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card" onclick="openModal('Pagmamano', 'Kaugaliang nagpapakita ng paggalang sa nakatatanda at paghingi ng kanilang imbokasyon o bendisyon.')">
+                        <div class="card-img">
+                            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=500&q=80" alt="Pagmamano">
+                        </div>
+                        <div class="card-info">
+                            <h4><i class="fa-solid fa-person-praying"></i> Pagmamano</h4>
+                            <p>Respeto at Pamilyar na Bendisyon</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Detailed Content -->
+    <div id="details-modal" class="modal">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modal-title">Pamagat ng Tampok</h3>
+            <p id="modal-description">Buong detalye ng napiling paksa...</p>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="info-section">
+        <div class="container">
+            <h2><i class="fa-solid fa-users"></i> TUNGKOL SA EXHIBIT</h2>
+            <p>Ang Digital Heritage Exhibit na ito ay binuo bilang pagtupad sa kinakailangan sa asignaturang <strong>Para sa Pag-aaral ng Kasaysayan at Lipunang Pilipino (PKLP)</strong> sa NU Las Piñas. Layunin nitong suriin ang ugnayan ng personal at panlipunang paniniwala sa kasaysayan ng bansa.</p>
+        </div>
+    </section>
+
+   <!-- References Section with Interactive Backdrop Focus -->
+    <section id="references" class="info-section dark-bg">
+        <div class="container">
+            <h2><i class="fa-solid fa-book"></i> MGA SANGGUNIAN</h2>
+            <ul class="ref-list">
+                <li>
+                    <i class="fa-solid fa-bookmark"></i> 
+                    <a href="https://ncca.gov.ph" target="_blank" class="ref-link">
+                        Pambansang Komisyon para sa Kultura at mga Sining (NCCA)
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-bookmark"></i> 
+                    <a href="https://www.nationalmuseum.gov.ph" target="_blank" class="ref-link">
+                        Pambansang Museo ng Pilipinas
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-bookmark"></i> 
+                    <a href="https://nhcp.gov.ph" target="_blank" class="ref-link">
+                        Pambansang Komisyong Historikal ng Pilipinas (NHCP)
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Interactive Digital Heritage Exhibit | NU Las Piñas Senior High School Department | 11SHS2602-CT | Group 2</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
