@@ -1,4 +1,4 @@
-// Hover & Click Drawer Navigation Setup
+// Mobile-Safe Touch & Click Drawer Navigation Setup
 const menuTrigger = document.getElementById('menu-trigger');
 const sideNav = document.getElementById('side-nav');
 const navOverlay = document.getElementById('nav-overlay');
@@ -13,48 +13,64 @@ function closeNav() {
     navOverlay.classList.remove('active');
 }
 
-menuTrigger.addEventListener('mouseenter', openNav);
-sideNav.addEventListener('mouseleave', closeNav);
-menuTrigger.addEventListener('click', () => {
+// Detect true mouse/hover capability
+const isHoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+if (isHoverCapable) {
+    // Desktop Hover Triggers
+    menuTrigger.addEventListener('mouseenter', openNav);
+    sideNav.addEventListener('mouseleave', closeNav);
+}
+
+// Explicit Click/Tap Event for Mobile & Fallback
+menuTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (sideNav.classList.contains('active')) {
         closeNav();
     } else {
         openNav();
     }
 });
+
 navOverlay.addEventListener('click', closeNav);
 
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', closeNav);
 });
 
-// Interactive Modal Feature
+
+// Mobile-Reliable Interactive Modal System
 function openModal(title, description) {
     document.getElementById('modal-title').innerText = title;
     document.getElementById('modal-description').innerText = description;
     document.getElementById('details-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevents background scrolling when open
 }
 
 function closeModal() {
     document.getElementById('details-modal').style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restores background scrolling
 }
 
-window.onclick = function(event) {
+// Global click handler to close modal on backdrop click
+window.addEventListener('click', (event) => {
     const modal = document.getElementById('details-modal');
     if (event.target === modal) {
-        modal.style.display = 'none';
+        closeModal();
     }
-};
+});
 
-// Seamless Infinite Loop Carousel System
+
+// Infinite Loop & Drag Carousel with Mobile Tap Fix
 const carouselWrapper = document.querySelector('.carousel-wrapper');
 const carouselTrack = document.getElementById('carousel-track');
 let autoScrollTimer = null;
 let isMouseDown = false;
+let isDragging = false;
 let startX = 0;
 let scrollLeftPos = 0;
 
-// Duplicate track cards dynamically for seamless looping
+// Clone track cards for infinite looping
 const originalCards = Array.from(carouselTrack.children);
 originalCards.forEach(card => {
     const clone = card.cloneNode(true);
@@ -62,7 +78,6 @@ originalCards.forEach(card => {
 });
 
 function getOriginalWidth() {
-    // Calculates total width of original item set including gaps
     return carouselTrack.scrollWidth / 2;
 }
 
@@ -70,8 +85,6 @@ function startAutoScroll() {
     if (autoScrollTimer) return;
     autoScrollTimer = setInterval(() => {
         const halfWidth = getOriginalWidth();
-        
-        // Instant reset when reaching exact duplicate start point
         if (carouselWrapper.scrollLeft >= halfWidth) {
             carouselWrapper.style.scrollBehavior = 'auto';
             carouselWrapper.scrollLeft -= halfWidth;
@@ -87,15 +100,18 @@ function stopAutoScroll() {
     autoScrollTimer = null;
 }
 
-// Pause rotation on hover
-carouselWrapper.addEventListener('mouseenter', stopAutoScroll);
-carouselWrapper.addEventListener('mouseleave', () => {
-    if (!isMouseDown) startAutoScroll();
-});
+// Pause rotation on hover for desktop
+if (isHoverCapable) {
+    carouselWrapper.addEventListener('mouseenter', stopAutoScroll);
+    carouselWrapper.addEventListener('mouseleave', () => {
+        if (!isMouseDown) startAutoScroll();
+    });
+}
 
-// Drag to scroll handling
+// Mouse Drag Events
 carouselWrapper.addEventListener('mousedown', (e) => {
     isMouseDown = true;
+    isDragging = false;
     carouselWrapper.classList.add('grabbing');
     startX = e.pageX - carouselWrapper.offsetLeft;
     scrollLeftPos = carouselWrapper.scrollLeft;
@@ -105,6 +121,7 @@ carouselWrapper.addEventListener('mousedown', (e) => {
 carouselWrapper.addEventListener('mouseleave', () => {
     isMouseDown = false;
     carouselWrapper.classList.remove('grabbing');
+    if (!isHoverCapable) startAutoScroll();
 });
 
 carouselWrapper.addEventListener('mouseup', () => {
@@ -117,9 +134,11 @@ carouselWrapper.addEventListener('mousemove', (e) => {
     e.preventDefault();
     const x = e.pageX - carouselWrapper.offsetLeft;
     const walk = (x - startX) * 2;
+    if (Math.abs(walk) > 5) {
+        isDragging = true; // Prevents modal from opening if the user is dragging
+    }
     carouselWrapper.scrollLeft = scrollLeftPos - walk;
     
-    // Boundary check during manual drag
     const halfWidth = getOriginalWidth();
     if (carouselWrapper.scrollLeft >= halfWidth) {
         carouselWrapper.scrollLeft -= halfWidth;
@@ -132,17 +151,28 @@ carouselWrapper.addEventListener('mousemove', (e) => {
     }
 });
 
-// Touch controls for mobile drag compatibility
-carouselWrapper.addEventListener('touchstart', stopAutoScroll);
-carouselWrapper.addEventListener('touchend', startAutoScroll);
+// Mobile Touch Events
+carouselWrapper.addEventListener('touchstart', () => {
+    stopAutoScroll();
+}, { passive: true });
 
-// Initialize rotation on boot
-startAutoScroll();
+carouselWrapper.addEventListener('touchend', () => {
+    startAutoScroll();
+}, { passive: true });
 
-// Mobile-Safe Reference Links Blur & Focus Trigger
+// Attach direct tap listeners to cards to prevent drag interference
+document.querySelectorAll('.gallery-card, .editorial-main').forEach(card => {
+    card.addEventListener('click', (e) => {
+        if (isDragging) {
+            e.preventDefault();
+            return;
+        }
+    });
+});
+
+
+// Mobile-Safe Reference Links Focus Trigger
 const refLinks = document.querySelectorAll('.ref-link');
-
-// Detect if primary input is touch
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 if (!isTouchDevice) {
@@ -156,11 +186,10 @@ if (!isTouchDevice) {
         });
     });
 } else {
-    // Explicit Mobile Cleanup on Touch End / Cancel
     refLinks.forEach(link => {
         link.addEventListener('touchend', () => {
             document.body.classList.remove('ref-blur-active');
-            link.blur(); // Remove active focus state on mobile
+            link.blur();
         });
         
         link.addEventListener('touchcancel', () => {
@@ -169,4 +198,6 @@ if (!isTouchDevice) {
         });
     });
 }
-});
+
+// Initialize carousel rotation
+startAutoScroll();
