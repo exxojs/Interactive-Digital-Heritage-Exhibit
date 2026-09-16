@@ -139,15 +139,34 @@ carouselWrapper.addEventListener('touchend', startAutoScroll);
 // Initialize rotation on boot
 startAutoScroll();
 
-// Reference Links Blur & Focus Trigger
+// Mobile-Safe Reference Links Blur & Focus Trigger
 const refLinks = document.querySelectorAll('.ref-link');
 
-refLinks.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-        document.body.classList.add('ref-blur-active');
-    });
+// Detect if primary input is touch
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    link.addEventListener('mouseleave', () => {
-        document.body.classList.remove('ref-blur-active');
+if (!isTouchDevice) {
+    refLinks.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            document.body.classList.add('ref-blur-active');
+        });
+
+        link.addEventListener('mouseleave', () => {
+            document.body.classList.remove('ref-blur-active');
+        });
     });
+} else {
+    // Explicit Mobile Cleanup on Touch End / Cancel
+    refLinks.forEach(link => {
+        link.addEventListener('touchend', () => {
+            document.body.classList.remove('ref-blur-active');
+            link.blur(); // Remove active focus state on mobile
+        });
+        
+        link.addEventListener('touchcancel', () => {
+            document.body.classList.remove('ref-blur-active');
+            link.blur();
+        });
+    });
+}
 });
